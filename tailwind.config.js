@@ -14,6 +14,7 @@ module.exports = {
       },
       colors: {
         "btn-cor-verde": "var(--btn-cor-verde)",
+        "cor-marrom": "var(--cor-marrom)",
       },
     },
   },
