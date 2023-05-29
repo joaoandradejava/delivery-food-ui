@@ -20,7 +20,7 @@ export default function index() {
   return (
     <div className="h-screen flex flex-col space-y-5 items-center">
       <TopoTelaLoginECadastro />
-      <div className="w-full md:w-96 h-96 border-blue-600 border-2">
+      <div className="w-full md:w-96 border-blue-600 border-2">
         <div className="bg-gray-100 h-10 flex justify-center items-center font-bold text-red-600">
           <span>1. Identificação</span>
         </div>
@@ -28,8 +28,18 @@ export default function index() {
         <div className="p-5">
           <form onSubmit={handleSubmit(realizarLogin)}>
             <div className="space-y-3">
-              <Input type="email" id="email" register={register} />
-              <Input type="password" id="senha" register={register} />
+              <Input
+                type="email"
+                id="email"
+                label="Email"
+                register={register}
+              />
+              <Input
+                type="password"
+                id="senha"
+                label="Senha"
+                register={register}
+              />
             </div>
 
             <div className="flex flex-col items-center space-y-3 mt-3">
