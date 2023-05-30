@@ -1,12 +1,29 @@
 import MenuTopo from "@/components/MenuTopo";
+import ProdutoCard from "@/components/ProdutoCard";
+import { Page } from "@/models/pagination";
+import { ProdutoModel } from "@/models/produto";
+import { buscarTodosProdutos } from "@/services/produto-service";
+import { useEffect, useState } from "react";
 
-export default function index(){
+export default function index() {
+  const [paginaAtual, setPaginaAtual] = useState<number>(0);
+  const [produtosPage, setPreodutosPage] = useState<Page<ProdutoModel>>();
+  const size: number = 12;
+
+  useEffect(() => {
+    buscarTodosProdutos({ page: paginaAtual, size }).then((data) => {
+      setPreodutosPage(data);
+    });
+  }, []);
+
   return (
     <div className="h-screen">
-      <div className="bg-black text-cor-marrom flex justify-center p-1">
-        <span className="">Simplesmente o melhor <span className="font-bold">pastel</span> da sua região.</span>
-      </div>
       <MenuTopo />
+      <div className="flex gap-3 items-center flex-wrap">
+        {produtosPage?.content.map((p) => (
+          <ProdutoCard key={p.id} produto={p} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
