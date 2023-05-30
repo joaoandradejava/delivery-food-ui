@@ -14,11 +14,7 @@ export default function InputMenuTopo() {
   const [nome, setNome] = useState<string>();
 
   function search() {}
-  function wait(milliseconds: number) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, milliseconds);
-    });
-  }
+  
   async function atualizarBusca(valor: string) {
     fazerUmaBuscaComDeterminadoTempo(async () => {
       setNome(valor);
@@ -47,7 +43,7 @@ export default function InputMenuTopo() {
       {nome?.trim() && produtos && produtos?.length > 0 ? (
         <div className="absolute top-full left-0 w-full bg-gray-100 border border-gray-300">
           {produtos.map((p) => (
-            <Link href="" key={p.id}>
+            <Link href={p.id} key={p.id}>
               <div className="p-2 flex items-center gap-3 hover:bg-gray-200 text-sm">
                 <img
                   src={p.fotoUrl ? p.fotoUrl : "images/sem-foto.jpg"}
