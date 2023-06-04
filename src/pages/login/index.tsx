@@ -1,6 +1,10 @@
 import CompraSegura from "@/components/CompraSegura";
+import Toast from "@/components/Toast";
 import TopoTelaLoginECadastro from "@/components/TopoTelaLoginECadastro";
 import Input from "@/components/forms/Input";
+import { LoginDTO } from "@/models/usuario";
+import { realizarLogin } from "@/services/auth-service";
+import { mostrarMensagemError } from "@/services/toast-service";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -13,8 +17,14 @@ export default function index() {
     formState: { errors },
   } = useForm();
 
-  function realizarLogin(data: any) {
-    console.log(data);
+  function entrar(data: LoginDTO) {
+    realizarLogin(data)
+      .then((data) => {
+        
+      })
+      .catch((error) => {
+        mostrarMensagemError(error.response.data.userMessage);
+      });
   }
 
   return (
@@ -26,7 +36,7 @@ export default function index() {
         </div>
 
         <div className="p-5">
-          <form onSubmit={handleSubmit(realizarLogin)}>
+          <form onSubmit={handleSubmit(entrar)}>
             <div className="space-y-3">
               <Input
                 type="email"
@@ -44,7 +54,7 @@ export default function index() {
 
             <div className="flex flex-col items-center space-y-3 mt-3">
               <button
-                onClick={() => realizarLogin}
+                onClick={() => entrar}
                 className="bg-btn-cor-verde rounded h-12 w-full md:w-72 text-white font-bold text-2xl"
               >
                 Continuar
@@ -61,6 +71,7 @@ export default function index() {
           <CompraSegura />
         </div>
       </div>
+      <Toast />
     </div>
   );
 }
