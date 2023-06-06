@@ -2,8 +2,12 @@ import Link from "next/link";
 import InputMenuTopo from "./InputMenuTopo";
 import { ShoppingCart } from "lucide-react";
 import { User2 } from "lucide-react";
+import { useContext } from "react";
+import { UsuarioContext } from "@/contexts/usuario-context";
 
 export default function MenuTopo() {
+  const { isAutenticado, usuarioAutenticado } = useContext(UsuarioContext);
+
   return (
     <>
       <div className="bg-black text-cor-marrom flex justify-center p-1">
@@ -26,16 +30,26 @@ export default function MenuTopo() {
           <Link href="/login">
             <User2 size={40} className="block" />
           </Link>
-          <span className="text-sm">
-            Bem vindo visitante, <br />{" "}
-            <Link href="/cadastro" className="font-bold">
-              cadastre-se
-            </Link>{" "}
-            ou <br />
-            <Link href="/cadastro" className="font-bold">
-              faça seu login
-            </Link>
-          </span>
+
+          {!isAutenticado ? (
+            <span className="text-sm">
+              Bem vindo visitante, <br />{" "}
+              <Link href="/cadastro" className="font-bold">
+                cadastre-se
+              </Link>{" "}
+              ou <br />
+              <Link href="/login" className="font-bold">
+                faça seu login
+              </Link>
+            </span>
+          ) : (
+            <span className="text-sm">
+              Olá {usuarioAutenticado?.nome}{" "}
+              <Link href="/minhas-conta/dados-cadastrais" className="font-bold">
+                Minha conta
+              </Link>
+            </span>
+          )}
         </div>
 
         <ShoppingCart size={50} />

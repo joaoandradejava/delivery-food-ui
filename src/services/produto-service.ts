@@ -1,9 +1,9 @@
 import { ProdutoFilter } from "@/models/filters/produto-filter";
 import { Page, Pageable } from "@/models/pagination";
 import { ProdutoFullModel, ProdutoModel } from "@/models/produto";
-import { BASE_API } from "@/utils/constants";
+import { API } from "./api";
 
-const REQUEST_MAPPING: string = `${BASE_API}/produtos`;
+const REQUEST_MAPPING: string = `/produtos`;
 
 export async function buscarTodosProdutos(
   pageable: Pageable,
@@ -11,18 +11,15 @@ export async function buscarTodosProdutos(
 ): Promise<Page<ProdutoModel>> {
   const { page, size } = pageable;
 
-  return fetch(
+  return API.get(
     `${REQUEST_MAPPING}?page=${page}&size=${size}&nome=${
       produtoFilter && produtoFilter.nome ? produtoFilter.nome : ""
-    }`,
-    {
-      method: "GET",
-    }
-  ).then((response) => response.json());
+    }`
+  ).then((response) => response.data);
 }
 
 export async function buscarProdutoPorId(
   id: string
 ): Promise<ProdutoFullModel> {
-  return fetch(`${REQUEST_MAPPING}/${id}`).then((data) => data.json());
+  return API.get(`${REQUEST_MAPPING}/${id}`).then((response) => response.data);
 }

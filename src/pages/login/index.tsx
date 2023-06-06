@@ -2,11 +2,14 @@ import CompraSegura from "@/components/CompraSegura";
 import Toast from "@/components/Toast";
 import TopoTelaLoginECadastro from "@/components/TopoTelaLoginECadastro";
 import Input from "@/components/forms/Input";
+import { UsuarioContext } from "@/contexts/usuario-context";
 import { LoginDTO } from "@/models/usuario";
-import { realizarLogin } from "@/services/auth-service";
-import { mostrarMensagemError } from "@/services/toast-service";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { parse } from "cookie";
+import { verificarSeUsuarioEstarLogadoPassandoContext } from "@/services/auth-service";
 
 export default function index() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -17,14 +20,10 @@ export default function index() {
     formState: { errors },
   } = useForm();
 
+  const { logarSistema } = useContext(UsuarioContext);
+
   function entrar(data: LoginDTO) {
-    realizarLogin(data)
-      .then((data) => {
-        
-      })
-      .catch((error) => {
-        mostrarMensagemError(error.response.data.userMessage);
-      });
+    logarSistema(data);
   }
 
   return (
@@ -74,4 +73,22 @@ export default function index() {
       <Toast />
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const isUsuarioLogado: boolean =
+    verificarSeUsuarioEstarLogadoPassandoContext(context);
+
+  if (isUsuarioLogado) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }
