@@ -4,7 +4,6 @@ import TopoTelaLoginECadastro from "@/components/TopoTelaLoginECadastro";
 import Input from "@/components/forms/Input";
 import { UsuarioContext } from "@/contexts/usuario-context";
 import { LoginDTO } from "@/models/usuario";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -53,7 +52,7 @@ export default function index() {
 
             <div className="flex flex-col items-center space-y-3 mt-3">
               <button
-                onClick={() => entrar}
+              type="submit"
                 className="bg-btn-cor-verde rounded h-12 w-full md:w-72 text-white font-bold text-2xl"
               >
                 Continuar

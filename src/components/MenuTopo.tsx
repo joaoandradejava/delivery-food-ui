@@ -45,7 +45,7 @@ export default function MenuTopo() {
           ) : (
             <span className="text-sm">
               Olá {usuarioAutenticado?.nome}{" "}
-              <Link href="/minhas-conta/dados-cadastrais" className="font-bold">
+              <Link href="/minha-conta/dados-cadastrais" className="font-bold">
                 Minha conta
               </Link>
             </span>

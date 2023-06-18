@@ -1,4 +1,5 @@
 import MenuTopo from "@/components/MenuTopo";
+import { verificarSeUsuarioEstarLogadoPassandoContext } from "@/services/auth-service";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -13,7 +14,7 @@ export default function index() {
     {
       titulo: "Informção pessoais",
       subtitulo: "Nome completo e CPF",
-      href: "informacao-pessoais",
+      href: "informacoes-pessoais",
     },
     {
       titulo: "Dados de contato",
@@ -45,4 +46,22 @@ export default function index() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const isUsuarioLogado: boolean =
+    verificarSeUsuarioEstarLogadoPassandoContext(context);
+
+  if (!isUsuarioLogado) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }
