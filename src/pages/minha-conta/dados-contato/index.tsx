@@ -14,6 +14,8 @@ import {
   CAMPO_OBRIGATORIO,
   CAMPO_VALOR_MAXIMO_O,
   CAMPO_VALOR_MINIMO_O,
+  EMAIL_INVALIDO,
+  TELEFONE_INVALIDO,
 } from "@/utils/constants";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,11 +31,23 @@ interface Props {
 }
 
 const schema = z.object({
-  nome: z
+  email: z
     .string()
     .nonempty(CAMPO_OBRIGATORIO)
-    .min(3, CAMPO_VALOR_MINIMO_O("nome", 3))
-    .max(255, CAMPO_VALOR_MAXIMO_O("nome", 255)),
+    .email(EMAIL_INVALIDO)
+    .max(255, CAMPO_VALOR_MAXIMO_O("email", 255)),
+
+  telefoneCelular: z
+    .string()
+    .nonempty(CAMPO_OBRIGATORIO)
+    .refine(
+      (t) => {
+        const mask = /\(\d{2}\) \d \d{4}-\d{4}/;
+        return mask.test(t);
+      },
+      { message: TELEFONE_INVALIDO }
+    )
+    .transform((t) => t.replace(/\D/g, "")),
 });
 
 export default function index(props: Props) {
@@ -45,16 +59,17 @@ export default function index(props: Props) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nome: usuarioFullModel.nome,
+      email: usuarioFullModel.email,
+      telefoneCelular: usuarioFullModel.telefoneCelular,
     },
     resolver: zodResolver(schema),
   });
 
   function salvar(data: UsuarioUpdateInput) {
-    data.email = usuarioFullModel.email
-    data.telefoneCelular = usuarioFullModel.telefoneCelular
+    data.nome = usuarioFullModel.nome;
+
     atualizarUsuario(usuarioFullModel.id, data)
-      .then((data) => {
+      .then((_) => {
         mostrarMensagemSucesso("Seus dados foram atualizados com sucesso.");
       })
       .catch((e) => {
@@ -66,20 +81,29 @@ export default function index(props: Props) {
     <div className="h-screen">
       <MenuTopo />
       <div className="w-5/12 mx-auto">
-        <span className="text-3xl font-bold">Meus dados</span>
+        <span className="text-3xl font-bold">Dados de contato</span>
         <form
           className="flex flex-col gap-3 mt-3"
           onSubmit={handleSubmit(salvar)}
         >
           <Input
-            id="nome"
-            label="Nome completo"
+            id="email"
+            label="Email"
             required
-            type="text"
-            error={errors.nome}
+            type="email"
+            error={errors.email}
             register={register}
           />
-
+          <Input
+            id="telefoneCelular"
+            label="Telefone fixo"
+            required
+            type="text"
+            error={errors.telefoneCelular}
+            maskFormat="(99) 9 9999-9999"
+            placeholder="(00) 0 0000-0000"
+            register={register}
+          />
           <div className="flex justify-end">
             <button
               type="submit"

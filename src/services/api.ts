@@ -4,15 +4,16 @@ import { getCookieUsuarioLogado } from "./auth-service";
 
 export const API = axios.create({
   baseURL: BASE_API,
+ 
 });
 
 API.interceptors.request.use((config) => {
-  const  usuarioAutenticado  = getCookieUsuarioLogado()
+  const usuarioAutenticado = getCookieUsuarioLogado();
 
   if (usuarioAutenticado != undefined) {
-    const token: string = `Bearer ${usuarioAutenticado.tokenJwt}`;
+    const token: string = usuarioAutenticado.tokenJwt;
 
-    config.headers.Authorizationd = token;
+    config.headers.Authorization = token;
   }
 
   return config;

@@ -28,3 +28,9 @@ export interface UsuarioCreateInput {
   senha: string;
   telefoneCelular: string;
 }
+
+export interface UsuarioUpdateInput {
+  nome: string;
+  email: string;
+  telefoneCelular: string;
+}

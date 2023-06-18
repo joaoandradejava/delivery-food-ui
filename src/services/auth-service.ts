@@ -42,3 +42,21 @@ export function verificarSeUsuarioEstarLogadoPassandoContext(
 
   return false;
 }
+
+export function getUsuarioLogadoPassandoContext(
+  context: any
+): UsuarioAutenticadoModel | undefined {
+  const cookie = parse(context.req.headers.cookie || "");
+
+  if (cookie != undefined && cookie[USUARIO_AUTENTICADO_NAME_COOKIE]) {
+    const usuarioLogadoString = cookie[USUARIO_AUTENTICADO_NAME_COOKIE];
+    try {
+      const usuarioLogado = JSON.parse(usuarioLogadoString);
+      return usuarioLogado;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  return undefined;
+}
