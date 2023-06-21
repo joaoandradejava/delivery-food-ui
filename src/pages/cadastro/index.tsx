@@ -50,7 +50,7 @@ const schema = z.object({
     .transform((t) => t.replace(/\D/g, "")),
 });
 
-export default function index() {
+export default function Index() {
   const {
     register,
     handleSubmit,

@@ -9,11 +9,11 @@ interface Opcao {
   href: string;
 }
 
-export default function index() {
+export default function Index() {
   const opcoes: Opcao[] = [
     {
       titulo: "Informção pessoais",
-      subtitulo: "Nome completo e CPF",
+      subtitulo: "Nome completo",
       href: "informacoes-pessoais",
     },
     {

@@ -16,6 +16,7 @@ import {
   CAMPO_VALOR_MINIMO_O,
   EMAIL_INVALIDO,
   TELEFONE_INVALIDO,
+  formatarTelefone,
 } from "@/utils/constants";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -25,6 +26,7 @@ import {
   mostrarMensagemError,
   mostrarMensagemSucesso,
 } from "@/services/toast-service";
+import Link from "next/link";
 
 interface Props {
   usuarioFullModel: UsuarioFullModel;
@@ -50,7 +52,7 @@ const schema = z.object({
     .transform((t) => t.replace(/\D/g, "")),
 });
 
-export default function index(props: Props) {
+export default function Index(props: Props) {
   const { usuarioFullModel } = props;
   const {
     register,
@@ -60,7 +62,7 @@ export default function index(props: Props) {
   } = useForm({
     defaultValues: {
       email: usuarioFullModel.email,
-      telefoneCelular: usuarioFullModel.telefoneCelular,
+      telefoneCelular: formatarTelefone(usuarioFullModel.telefoneCelular),
     },
     resolver: zodResolver(schema),
   });
@@ -104,7 +106,16 @@ export default function index(props: Props) {
             placeholder="(00) 0 0000-0000"
             register={register}
           />
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-3">
+            <Link href="dados-cadastrais">
+              <button
+                type="button"
+                className="bg-white text-black font-bold p-2 w-20 rounded-xl hover:bg-slate-50 shadow-xl"
+              >
+                Voltar
+              </button>
+            </Link>
+
             <button
               type="submit"
               className="bg-red-600 text-white font-bold p-2 w-20 rounded-xl hover:bg-red-800 shadow-xl"

@@ -5,7 +5,7 @@ import { ProdutoModel } from "@/models/produto";
 import { buscarTodosProdutos } from "@/services/produto-service";
 import { useEffect, useState } from "react";
 
-export default function index() {
+export default function Index() {
   const [paginaAtual, setPaginaAtual] = useState<number>(0);
   const [produtosPage, setPreodutosPage] = useState<Page<ProdutoModel>>();
   const size: number = 12;

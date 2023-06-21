@@ -11,6 +11,7 @@ interface InputProps {
   required?: boolean;
   error?: any;
   maskFormat?: string;
+  disabled?: boolean;
 }
 
 export default function Input(props: InputProps) {
@@ -23,6 +24,7 @@ export default function Input(props: InputProps) {
     required,
     error,
     maskFormat,
+    disabled,
   } = props;
 
   return (
@@ -42,6 +44,7 @@ export default function Input(props: InputProps) {
         />
       ) : (
         <input
+          disabled={disabled}
           type={type}
           id={id}
           placeholder={placeholder}

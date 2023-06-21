@@ -1,32 +1,28 @@
 import MenuTopo from "@/components/MenuTopo";
+import Toast from "@/components/Toast";
 import Input from "@/components/forms/Input";
-import {
-  UsuarioAutenticadoModel,
-  UsuarioFullModel,
-  UsuarioUpdateInput,
-} from "@/models/usuario";
+import { CategoriaInput, CategoriaModel } from "@/models/categoria";
+import { UsuarioAutenticadoModel } from "@/models/usuario";
 import { getUsuarioLogadoPassandoContext } from "@/services/auth-service";
 import {
-  atualizarUsuario,
-  buscarUsuarioPorId,
-} from "@/services/usuario-service";
+  atualizarCategoria,
+  buscarCategoriaPorId,
+  cadastrarCategoria,
+} from "@/services/categoria-service";
+import { mostrarMensagemSucesso } from "@/services/toast-service";
 import {
   CAMPO_OBRIGATORIO,
   CAMPO_VALOR_MAXIMO_O,
   CAMPO_VALOR_MINIMO_O,
 } from "@/utils/constants";
+import { isTemAcesso } from "@/utils/guard";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Toast from "@/components/Toast";
-import {
-  mostrarMensagemError,
-  mostrarMensagemSucesso,
-} from "@/services/toast-service";
-import Link from "next/link";
 
 interface Props {
-  usuarioFullModel: UsuarioFullModel;
+  categoriaModel: CategoriaModel;
 }
 
 const schema = z.object({
@@ -36,53 +32,53 @@ const schema = z.object({
     .min(3, CAMPO_VALOR_MINIMO_O("nome", 3))
     .max(255, CAMPO_VALOR_MAXIMO_O("nome", 255)),
 });
-
 export default function Index(props: Props) {
-  const { usuarioFullModel } = props;
+  const { categoriaModel } = props;
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nome: usuarioFullModel.nome,
+      id: categoriaModel.id,
+      nome: categoriaModel.nome,
     },
     resolver: zodResolver(schema),
   });
 
-  function salvar(data: UsuarioUpdateInput) {
-    data.email = usuarioFullModel.email;
-    data.telefoneCelular = usuarioFullModel.telefoneCelular;
-    atualizarUsuario(usuarioFullModel.id, data)
-      .then((data) => {
-        mostrarMensagemSucesso("Seus dados foram atualizados com sucesso.");
-      })
-      .catch((e) => {
-        mostrarMensagemError(e.response.data.userMessage);
-      });
+  function atualizar(data: CategoriaInput) {
+    atualizarCategoria(data, categoriaModel.id).then((data) => {
+      mostrarMensagemSucesso("Atualizado com sucesso");
+    });
   }
 
   return (
     <div className="h-screen">
       <MenuTopo />
-      <div className="w-5/12 mx-auto">
-        <span className="text-3xl font-bold">Meus dados</span>
+      <div className="w-11/12 mx-auto flex flex-col">
         <form
-          className="flex flex-col gap-3 mt-3"
-          onSubmit={handleSubmit(salvar)}
+          className="flex flex-col gap-3"
+          onSubmit={handleSubmit(atualizar)}
         >
+          <div className="w-2/12">
+            <Input
+              id="id"
+              label="Id"
+              type="text"
+              register={register}
+              disabled
+            />
+          </div>
           <Input
             id="nome"
-            label="Nome completo"
             required
+            label="Nome"
             type="text"
             error={errors.nome}
             register={register}
           />
-
           <div className="flex justify-end gap-3">
-            <Link href="dados-cadastrais">
+            <Link href="../">
               <button
                 type="button"
                 className="bg-white text-black font-bold p-2 w-20 rounded-xl hover:bg-slate-50 shadow-xl"
@@ -90,6 +86,7 @@ export default function Index(props: Props) {
                 Voltar
               </button>
             </Link>
+
             <button
               type="submit"
               className="bg-red-600 text-white font-bold p-2 w-20 rounded-xl hover:bg-red-800 shadow-xl"
@@ -105,20 +102,7 @@ export default function Index(props: Props) {
 }
 
 export async function getServerSideProps(context: any) {
-  const usuarioLogado: UsuarioAutenticadoModel | undefined =
-    getUsuarioLogadoPassandoContext(context);
-
-  if (usuarioLogado) {
-    const usuarioFullModel: UsuarioFullModel = await buscarUsuarioPorId(
-      usuarioLogado.id,
-      usuarioLogado.tokenJwt
-    );
-    return {
-      props: {
-        usuarioFullModel: usuarioFullModel,
-      },
-    };
-  } else {
+  if (!isTemAcesso(context, true)) {
     return {
       redirect: {
         destination: "/",
@@ -126,4 +110,18 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
+  const usuarioLogado: UsuarioAutenticadoModel | undefined =
+    getUsuarioLogadoPassandoContext(context);
+  const tokenJwt: string = usuarioLogado ? usuarioLogado.tokenJwt : "";
+  const { id } = context.query;
+  const categoriaModel: CategoriaModel = await buscarCategoriaPorId(
+    id,
+    tokenJwt
+  );
+
+  return {
+    props: {
+      categoriaModel,
+    },
+  };
 }

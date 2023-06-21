@@ -7,11 +7,9 @@ import { LoginDTO } from "@/models/usuario";
 import Link from "next/link";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { parse } from "cookie";
 import { verificarSeUsuarioEstarLogadoPassandoContext } from "@/services/auth-service";
 
-export default function index() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+export default function Index() {
   const {
     register,
     handleSubmit,
@@ -52,7 +50,7 @@ export default function index() {
 
             <div className="flex flex-col items-center space-y-3 mt-3">
               <button
-              type="submit"
+                type="submit"
                 className="bg-btn-cor-verde rounded h-12 w-full md:w-72 text-white font-bold text-2xl"
               >
                 Continuar
