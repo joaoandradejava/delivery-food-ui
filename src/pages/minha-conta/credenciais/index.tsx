@@ -19,23 +19,28 @@ import {
   mostrarMensagemError,
   mostrarMensagemSucesso,
 } from "@/services/toast-service";
-const schema = z.object({
-  senhaAtual: z
-    .string()
-    .nonempty(CAMPO_OBRIGATORIO)
-    .min(6, CAMPO_VALOR_MINIMO_A("senha atual", 6))
-    .max(255, CAMPO_VALOR_MAXIMO_A("senha tual", 255)),
-  novaSenha: z
-    .string()
-    .nonempty(CAMPO_OBRIGATORIO)
-    .min(6, CAMPO_VALOR_MINIMO_A("Nova senha", 6))
-    .max(255, CAMPO_VALOR_MAXIMO_A("Nova senha", 255)),
-  confirmacaoNovaSenha: z
-    .string()
-    .nonempty(CAMPO_OBRIGATORIO)
-    .min(6, CAMPO_VALOR_MINIMO_A("Confirmação nova senha", 6))
-    .max(255, CAMPO_VALOR_MAXIMO_A("Confirmação nova senha", 255)),
-});
+const schema = z
+  .object({
+    senhaAtual: z
+      .string()
+      .nonempty(CAMPO_OBRIGATORIO)
+      .min(6, CAMPO_VALOR_MINIMO_A("senha atual", 6))
+      .max(255, CAMPO_VALOR_MAXIMO_A("senha tual", 255)),
+    novaSenha: z
+      .string()
+      .nonempty(CAMPO_OBRIGATORIO)
+      .min(6, CAMPO_VALOR_MINIMO_A("Nova senha", 6))
+      .max(255, CAMPO_VALOR_MAXIMO_A("Nova senha", 255)),
+    confirmacaoNovaSenha: z
+      .string()
+      .nonempty(CAMPO_OBRIGATORIO)
+      .min(6, CAMPO_VALOR_MINIMO_A("Confirmação nova senha", 6))
+      .max(255, CAMPO_VALOR_MAXIMO_A("Confirmação nova senha", 255)),
+  })
+  .refine((data) => data.novaSenha === data.confirmacaoNovaSenha, {
+    message: "As senhas não correspondem",
+    path: ["confirmacaoNovaSenha"], // path of error
+  });
 export default function Index() {
   const {
     register,
@@ -112,7 +117,7 @@ export default function Index() {
 }
 
 export async function getServerSideProps(context: any) {
-  if (!isTemAcesso(context), false) {
+  if ((!isTemAcesso(context), false)) {
     return {
       redirect: {
         destination: "/",

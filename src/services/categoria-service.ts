@@ -8,7 +8,7 @@ export async function buscarTodasCategorias(pageable: Pageable
 ): Promise<Page<CategoriaModel>> {
     const { size, page } = pageable;
 
-    return API.get(`${REQUEST_MAPPING}?size=${size}&page=${page}`).then(response => response.data);
+    return API.get(`${REQUEST_MAPPING}?size=${size}&page=${page}&sort=id,desc`).then(response => response.data);
 }
 
 export async function buscarCategoriaPorId(id: number, tokenJwt: string): Promise<CategoriaModel> {
