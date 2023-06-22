@@ -43,7 +43,8 @@ export default function Index() {
   return (
     <div className="h-screen">
       <MenuTopo />
-      <div className="w-11/12 mx-auto flex flex-col">
+      <div className="w-full md:w-4/12  mx-auto flex flex-col pt-0 p-5">
+        <span className="text-3xl font-bold text-center">Categoria</span>
         <form className="flex flex-col gap-3" onSubmit={handleSubmit(salvar)}>
           <div className="w-2/12">
             <Input

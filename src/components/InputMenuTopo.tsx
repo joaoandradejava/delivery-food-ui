@@ -27,7 +27,7 @@ export default function InputMenuTopo() {
   }
 
   return (
-    <div className="w-full relative text-black bg-white h-10 rounded flex justify-between items-center">
+    <div className="border-gray-200 outline-blue-400 focus:ring-indigo-500 focus:border-indigo-500 w-full relative bg-white h-10 placeholder-gray-400 border-2 rounded-md shadow-sm focus:outline-none text-gray-700 flex justify-between items-center">
       <input
         type="text"
         placeholder="Encontre a sua comida"

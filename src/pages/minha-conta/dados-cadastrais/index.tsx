@@ -21,6 +21,11 @@ export default function Index() {
       subtitulo: "E-mail e telefone de contato",
       href: "dados-contato",
     },
+    {
+      titulo: "Credenciais",
+      subtitulo: "Altere sua senha",
+      href: "credenciais",
+    },
   ];
 
   return (

@@ -40,7 +40,13 @@ export default function Input(props: InputProps) {
           placeholder={placeholder}
           {...register(id)}
           type={type}
-          className="bg-gray-50 text-sm px-3 w-full h-11 rounded-xl p-2 border-gray-200 border-2 outline-blue-400"
+          className={`w-full px-2 py-3 placeholder-gray-400 border-2 rounded-md shadow-sm focus:outline-none text-gray-700
+            ${
+              error?.message
+                ? "border-red-400 outline-red-500 focus:ring-red-500 focus:border-red-500"
+                : " border-gray-200 outline-blue-400 focus:ring-indigo-500 focus:border-indigo-500"
+            }
+          `}
         />
       ) : (
         <input
@@ -49,10 +55,10 @@ export default function Input(props: InputProps) {
           id={id}
           placeholder={placeholder}
           {...register(id)}
-          className={`bg-gray-50 text-sm px-3 w-full h-11 rounded-xl p-2 ${
+          className={`w-full px-2 py-3 border-2 placeholder-gray-400 rounded-md shadow-sm focus:outline-none text-gray-700 ${
             error?.message
-              ? "border-red-400 border-2 outline-red-500"
-              : "border-gray-200 border-2 outline-blue-400"
+              ? "border-red-400 outline-red-500 focus:ring-red-500 focus:border-red-500"
+              : " border-gray-200 outline-blue-400 focus:ring-indigo-500 focus:border-indigo-500"
           } `}
         />
       )}

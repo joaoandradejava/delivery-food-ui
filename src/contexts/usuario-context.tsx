@@ -1,5 +1,6 @@
 import { LoginDTO, UsuarioAutenticadoModel } from "@/models/usuario";
 import {
+  deslogar,
   getCookieUsuarioLogado,
   salvarCookieUsuarioLogado,
 } from "@/services/auth-service";
@@ -12,6 +13,7 @@ interface UsuarioContextType {
   usuarioAutenticado: UsuarioAutenticadoModel | undefined;
   isAutenticado: boolean;
   logarSistema: (loginDTO: LoginDTO) => void;
+  sairSistema: () => void;
 }
 
 export const UsuarioContext = createContext({} as UsuarioContextType);
@@ -22,6 +24,13 @@ export function UsuarioProvider({ children }: any) {
     UsuarioAutenticadoModel | undefined
   >();
   const [isAutenticado, setIsAutenticado] = useState(!!usuarioAutenticado);
+
+  function sairSistema() {
+    deslogar();
+    setIsAutenticado(false);
+    setUsuarioAutenticado(undefined);
+    router.push("/");
+  }
 
   function logarSistema(loginDTO: LoginDTO) {
     realizarLogin(loginDTO)
@@ -48,7 +57,7 @@ export function UsuarioProvider({ children }: any) {
 
   return (
     <UsuarioContext.Provider
-      value={{ usuarioAutenticado, logarSistema, isAutenticado }}
+      value={{ usuarioAutenticado, logarSistema, isAutenticado, sairSistema }}
     >
       {children}
     </UsuarioContext.Provider>

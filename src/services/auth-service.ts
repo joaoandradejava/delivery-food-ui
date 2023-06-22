@@ -16,6 +16,10 @@ export function salvarCookieUsuarioLogado(usuario: UsuarioAutenticadoModel) {
   Cookies.set(USUARIO_AUTENTICADO_NAME_COOKIE, JSON.stringify(usuario));
 }
 
+export function deslogar() {
+  Cookies.remove(USUARIO_AUTENTICADO_NAME_COOKIE);
+}
+
 export function getCookieUsuarioLogado(): UsuarioAutenticadoModel | undefined {
   const usuarioLogadoString = Cookies.get(USUARIO_AUTENTICADO_NAME_COOKIE);
 

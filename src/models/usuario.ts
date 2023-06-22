@@ -34,3 +34,9 @@ export interface UsuarioUpdateInput {
   email: string;
   telefoneCelular: string;
 }
+
+export interface MudancaSenhaInput {
+  senhaAtual: string;
+  novaSenha: string;
+  confirmacaoNovaSenha: string;
+}
