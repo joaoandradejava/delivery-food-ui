@@ -1,4 +1,4 @@
-import { CategoriaModel } from "./categoria";
+import { CategoriaIdInput, CategoriaModel } from "./categoria";
 
 export interface ProdutoModel {
   id: string;
@@ -19,4 +19,12 @@ export interface ProdutoFullModel {
   dataCadastro: Date;
   dataAtualizacao: Date;
   categorias: CategoriaModel[];
+}
+
+export interface ProdutoInput {
+  nome: string;
+  descricao: string;
+  preco: number;
+  fotoUrl: string;
+  categorias: CategoriaIdInput[];
 }
