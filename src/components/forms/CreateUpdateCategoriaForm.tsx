@@ -5,6 +5,7 @@ import {
   CAMPO_VALOR_MAXIMO_O,
   CAMPO_VALOR_MINIMO_O,
 } from "@/utils/constants";
+import { LINK_LISTA_CATEGORIAS_ADMIN } from "@/utils/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -56,7 +57,7 @@ export default function CreateUpdateCategoriaForm(props: Props) {
         register={register}
       />
       <div className="flex justify-end gap-3">
-        <Link href="../">
+        <Link href={LINK_LISTA_CATEGORIAS_ADMIN}>
           <button
             type="button"
             className="bg-white text-black font-bold p-2 w-20 rounded-xl hover:bg-slate-50 shadow-xl"

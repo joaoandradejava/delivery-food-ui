@@ -6,6 +6,7 @@ import {
 } from "@/services/auth-service";
 import { realizarLogin } from "@/services/auth-service";
 import { mostrarMensagemError } from "@/services/toast-service";
+import { LINK_PAGINA_INICIAL } from "@/utils/routes";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
 
@@ -39,7 +40,7 @@ export function UsuarioProvider({ children }: any) {
         setIsAutenticado(true);
         setUsuarioAutenticado(data);
 
-        router.push("/");
+        router.push(LINK_PAGINA_INICIAL);
       })
       .catch((error) => {
         mostrarMensagemError(error.response.data.userMessage);

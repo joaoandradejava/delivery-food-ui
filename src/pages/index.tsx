@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import MenuTopo from "@/components/MenuTopo";
 import ProdutoCard from "@/components/ProdutoCard";
 import { Page } from "@/models/pagination";
@@ -17,13 +18,12 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
+    <Layout>
       <div className="flex gap-3 items-center flex-wrap">
         {produtosPage?.content.map((p) => (
           <ProdutoCard key={p.id} produto={p} />
         ))}
       </div>
-    </div>
+    </Layout>
   );
 }

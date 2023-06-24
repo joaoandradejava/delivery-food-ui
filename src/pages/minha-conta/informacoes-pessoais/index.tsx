@@ -24,6 +24,8 @@ import {
   mostrarMensagemSucesso,
 } from "@/services/toast-service";
 import Link from "next/link";
+import { LINK_PAGINA_DADOS_CADASTRAIS } from "@/utils/routes";
+import Layout from "@/components/Layout";
 
 interface Props {
   usuarioFullModel: UsuarioFullModel;
@@ -64,9 +66,8 @@ export default function Index(props: Props) {
   }
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
-      <div className="w-5/12 mx-auto">
+    <Layout>
+<div className="w-5/12 mx-auto">
         <span className="text-3xl font-bold">Meus dados</span>
         <form
           className="flex flex-col gap-3 mt-3"
@@ -82,7 +83,7 @@ export default function Index(props: Props) {
           />
 
           <div className="flex justify-end gap-3">
-            <Link href="dados-cadastrais">
+            <Link href={LINK_PAGINA_DADOS_CADASTRAIS}>
               <button
                 type="button"
                 className="bg-white text-black font-bold p-2 w-20 rounded-xl hover:bg-slate-50 shadow-xl"
@@ -99,8 +100,7 @@ export default function Index(props: Props) {
           </div>
         </form>
       </div>
-      <Toast />
-    </div>
+    </Layout>
   );
 }
 

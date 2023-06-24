@@ -70,7 +70,7 @@ export default function Index() {
   }
 
   return (
-    <div className="h-screen flex flex-col space-y-5 items-center">
+    <div className="h-screen flex flex-col space-y-5 items-center overflow-auto">
       <TopoTelaLoginECadastro />
       <div className="w-full md:w-96 border-blue-600 border-2">
         <div className="bg-gray-100 h-10 flex justify-center items-center font-bold text-red-600">

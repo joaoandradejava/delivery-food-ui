@@ -1,5 +1,6 @@
 import MenuTopo from "@/components/MenuTopo";
 import Toast from "@/components/Toast";
+import LayoutAdmin from "@/components/admin/LayoutAdmin";
 import CreateUpdateCategoriaForm from "@/components/forms/CreateUpdateCategoriaForm";
 import { CategoriaInput, CategoriaModel } from "@/models/categoria";
 import { UsuarioAutenticadoModel } from "@/models/usuario";
@@ -33,17 +34,15 @@ export default function Index(props: Props) {
   }
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
-      <div className="w-full md:w-4/12  mx-auto flex flex-col pt-3 p-5 bg-white shadow-xl rounded">
+    <LayoutAdmin>
+      <div className="w-full md:w-9/12  mx-auto flex flex-col pt-3 p-5 bg-white shadow-xl rounded">
         <span className="text-3xl font-medium text-center">Categoria</span>
         <CreateUpdateCategoriaForm
           onSalvarOuAtualizar={atualizar}
           categoriaModel={categoriaModel}
         />
       </div>
-      <Toast />
-    </div>
+    </LayoutAdmin>
   );
 }
 

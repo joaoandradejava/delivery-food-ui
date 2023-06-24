@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import MenuTopo from "@/components/MenuTopo";
 import { ProdutoFullModel } from "@/models/produto";
 import { buscarProdutoPorId } from "@/services/produto-service";
@@ -11,8 +12,7 @@ export default function index(props: Props) {
   const { produto } = props;
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
+    <Layout>
       <div className="w-11/12 mx-auto flex md:flex-row flex-col flex-wrap gap-5">
         <div className="flex-1 flex justify-end">
           <img
@@ -29,7 +29,7 @@ export default function index(props: Props) {
           </span>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 

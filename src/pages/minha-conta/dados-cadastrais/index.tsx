@@ -1,5 +1,11 @@
+import Layout from "@/components/Layout";
 import MenuTopo from "@/components/MenuTopo";
 import { verificarSeUsuarioEstarLogadoPassandoContext } from "@/services/auth-service";
+import {
+  LINK_DADOS_CONTATO,
+  LINK_INFORMACOES_PESSOAIS,
+  LINK_MUDAR_CREDENCIAIS,
+} from "@/utils/routes";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
@@ -14,23 +20,22 @@ export default function Index() {
     {
       titulo: "Informção pessoais",
       subtitulo: "Nome completo",
-      href: "informacoes-pessoais",
+      href: LINK_INFORMACOES_PESSOAIS,
     },
     {
       titulo: "Dados de contato",
       subtitulo: "E-mail e telefone de contato",
-      href: "dados-contato",
+      href: LINK_DADOS_CONTATO,
     },
     {
       titulo: "Credenciais",
       subtitulo: "Altere sua senha",
-      href: "credenciais",
+      href: LINK_MUDAR_CREDENCIAIS,
     },
   ];
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
+    <Layout>
       <div className="w-5/12 mx-auto">
         <span className="text-3xl font-bold">Meus dados</span>
         <div className="flex flex-col gap-3 mt-5">
@@ -49,7 +54,7 @@ export default function Index() {
           })}
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 

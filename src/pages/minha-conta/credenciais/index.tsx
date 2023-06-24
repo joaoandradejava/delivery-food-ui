@@ -19,6 +19,8 @@ import {
   mostrarMensagemError,
   mostrarMensagemSucesso,
 } from "@/services/toast-service";
+import { LINK_PAGINA_DADOS_CADASTRAIS } from "@/utils/routes";
+import Layout from "@/components/Layout";
 const schema = z
   .object({
     senhaAtual: z
@@ -60,8 +62,7 @@ export default function Index() {
   }
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
+    <Layout>
       <div className="w-full md:w-4/12  mx-auto flex flex-col pt-0 p-5">
         <span className="text-2xl font-bold">Mude sua senha</span>
         <form
@@ -93,7 +94,7 @@ export default function Index() {
             error={errors.confirmacaoNovaSenha}
           />
           <div className="flex justify-end gap-3">
-            <Link href="../">
+            <Link href={LINK_PAGINA_DADOS_CADASTRAIS}>
               <button
                 type="button"
                 className="bg-white text-black font-bold p-2 w-20 rounded-xl hover:bg-slate-50 shadow-xl"
@@ -111,8 +112,7 @@ export default function Index() {
           </div>
         </form>
       </div>
-      <Toast />
-    </div>
+    </Layout>
   );
 }
 

@@ -19,6 +19,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Link from "next/link";
+import {
+  LINK_EDITAR_PRODUTO_ADMIN,
+  LINK_NOVO_PRODUTO_ADMIN,
+} from "@/utils/routes";
+import LayoutAdmin from "@/components/admin/LayoutAdmin";
 
 export default function Index() {
   const [idProduto, setIdProduto] = useState("");
@@ -79,8 +84,7 @@ export default function Index() {
   }
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
+    <LayoutAdmin>
       <ConfirmacaoModal
         conteudoDaMensagem="Você tem certeza de que deseja excluir esta produto? Esta ação não poderá ser desfeita."
         isAberto={isModalConfirmacaoExclusaoProdutoOpen}
@@ -95,7 +99,7 @@ export default function Index() {
           </span>
         </div>
         <div className="mb-5">
-          <Link href="produtos/produto">
+          <Link href={LINK_NOVO_PRODUTO_ADMIN}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Novo
             </button>
@@ -113,9 +117,6 @@ export default function Index() {
               <thead>
                 <tr>
                   <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-bold uppercase tracking-wider">
-                    Código
-                  </th>
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-bold uppercase tracking-wider">
                     Nome
                   </th>
                   <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-bold  uppercase tracking-wider">
@@ -131,9 +132,6 @@ export default function Index() {
                   return (
                     <tr key={p.id}>
                       <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
-                        {p.id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
                         {p.nome}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
@@ -143,7 +141,7 @@ export default function Index() {
                         <button
                           className=" text-blue-500"
                           onClick={() =>
-                            router.push(`/produtos/produto/${p.id}`)
+                            router.push(LINK_EDITAR_PRODUTO_ADMIN(p.id))
                           }
                         >
                           <Edit />
@@ -168,8 +166,7 @@ export default function Index() {
           </div>
         )}
       </div>
-      <Toast />
-    </div>
+    </LayoutAdmin>
   );
 }
 

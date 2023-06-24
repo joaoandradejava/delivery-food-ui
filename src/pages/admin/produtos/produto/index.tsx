@@ -1,28 +1,20 @@
 import MenuTopo from "@/components/MenuTopo";
 import Toast from "@/components/Toast";
+import LayoutAdmin from "@/components/admin/LayoutAdmin";
 import CreateUpdateProdutoForm from "@/components/forms/CreateUpdateProdutoForm";
 import { CategoriaModel } from "@/models/categoria";
 import { Page } from "@/models/pagination";
-import { ProdutoFullModel, ProdutoInput } from "@/models/produto";
+import { ProdutoInput } from "@/models/produto";
 import { buscarTodasCategorias } from "@/services/categoria-service";
-import {
-  atualizarProduto,
-  buscarProdutoPorId,
-} from "@/services/produto-service";
-import {
-  mostrarMensagemError,
-  mostrarMensagemSucesso,
-} from "@/services/toast-service";
-import { getUserMessageError } from "@/utils/constants";
+import { cadastrarProduto } from "@/services/produto-service";
+import { mostrarMensagemSucesso } from "@/services/toast-service";
 import { isTemAcesso } from "@/utils/guard";
+import { LINK_EDITAR_PRODUTO_ADMIN } from "@/utils/routes";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-interface Props {
-  produtoFullModel: ProdutoFullModel;
-}
-
-export default function Index(props: Props) {
-  const { produtoFullModel } = props;
+export default function Index() {
+  const router = useRouter();
   const [categorias, setCategorias] = useState<Page<CategoriaModel>>();
   const options = categorias?.content.map((c) => ({
     label: c.nome,
@@ -31,14 +23,10 @@ export default function Index(props: Props) {
   }));
 
   function salvar(data: ProdutoInput) {
-    console.log(data)
-    atualizarProduto(data, produtoFullModel.id)
-      .then((data) => {
-        mostrarMensagemSucesso("Produto atualizado sucesso");
-      })
-      .catch((e) => {
-        mostrarMensagemError(getUserMessageError(e));
-      });
+    cadastrarProduto(data).then((data) => {
+      mostrarMensagemSucesso("Cadastro realizado com sucesso");
+      router.push(LINK_EDITAR_PRODUTO_ADMIN(data.id));
+    });
   }
 
   function buscarCategorias() {
@@ -52,18 +40,15 @@ export default function Index(props: Props) {
   }, []);
 
   return (
-    <div className="h-screen">
-      <MenuTopo />
-      <div className="w-full md:w-4/12  mx-auto flex flex-col pt-3 p-5 bg-white shadow-xl rounded">
+    <LayoutAdmin>
+      <div className="w-full md:w-9/12  mx-auto flex flex-col pt-3 p-5 bg-white shadow-xl rounded">
         <span className="text-3xl font-medium text-center">Produto</span>
         <CreateUpdateProdutoForm
-          produtoFullModel={produtoFullModel}
-          onSalvarOuAtualizar={salvar}
           options={options}
+          onSalvarOuAtualizar={salvar}
         />
       </div>
-      <Toast />
-    </div>
+    </LayoutAdmin>
   );
 }
 
@@ -77,13 +62,7 @@ export async function getServerSideProps(context: any) {
     };
   }
 
-  const produtoFullModel: ProdutoFullModel = await buscarProdutoPorId(
-    context.query.id
-  );
-
   return {
-    props: {
-      produtoFullModel,
-    },
+    props: {},
   };
 }
