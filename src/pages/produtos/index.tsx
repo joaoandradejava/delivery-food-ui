@@ -84,7 +84,7 @@ export default function Index(){
         <div className="flex flex-col w-11/12 mx-auto">
           <div className="flex flex-col gap-3 justify-center items-center">
             <span className="text-3xl font-bold">Tela de Administração</span>
-            <span className="text-2xl font-bold">produtos</span>
+            <span className="text-2xl font-bold">Produtos</span>
           </div>
           <div className="mb-5">
             <Link href="produtos/produto">

@@ -14,7 +14,7 @@ export async function buscarTodosProdutos(
   return API.get(
     `${REQUEST_MAPPING}?page=${page}&size=${size}&nome=${
       produtoFilter && produtoFilter.nome ? produtoFilter.nome : ""
-    }`
+    }&sort=id,desc`
   ).then((response) => response.data);
 }
 

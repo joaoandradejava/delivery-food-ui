@@ -29,9 +29,21 @@ export function formatarDinheiro(valor: number): string {
   });
 }
 
-export function formatarTelefone(numeroTelefone: string): string {
-  return "(" + numeroTelefone.substring(0, 2) + ") " + numeroTelefone.substring(2, 3) + " " + numeroTelefone.substring(3, 7) + "-" + numeroTelefone.substring(7);
+export function getUserMessageError(error: any): string {
+  return error.response.data.userMessage;
+}
 
+export function formatarTelefone(numeroTelefone: string): string {
+  return (
+    "(" +
+    numeroTelefone.substring(0, 2) +
+    ") " +
+    numeroTelefone.substring(2, 3) +
+    " " +
+    numeroTelefone.substring(3, 7) +
+    "-" +
+    numeroTelefone.substring(7)
+  );
 }
 
 export function fazerUmaBuscaComDeterminadoTempo(
