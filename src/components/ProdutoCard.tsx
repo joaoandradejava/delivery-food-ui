@@ -15,7 +15,7 @@ export default function ProdutoCard(props: ProdutoCardProps) {
   }
 
   return (
-    <div className="w-72 h-96 border rounded flex flex-col p-5 justify-between shadow">
+    <div className="w-72 h-96 rounded flex flex-col p-5 justify-between shadow-md border">
       <div
         className="flex flex-col gap-3 hover:cursor-pointer"
         onClick={navegar}
