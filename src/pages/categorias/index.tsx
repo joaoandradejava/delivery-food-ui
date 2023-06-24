@@ -86,10 +86,12 @@ export default function Index() {
         onCancelar={cancelarExclusao}
         onConfirmar={confirmarExclusao}
       />
-      <div className="flex flex-col w-11/12 mx-auto">
-        <div className="flex flex-col gap-3 justify-center items-center">
-          <span className="text-3xl font-bold">Tela de Administração</span>
-          <span className="text-2xl font-bold">Categorias</span>
+      <div className="flex flex-col w-11/12 mx-auto bg-white p-5 shadow-xl">
+        <div className="flex flex-col gap-3 justify-center">
+        <span className="text-xl font-bold">Categorias</span>
+          <span className="mb-3 ">
+            Cadastre aqui as categorias do seu sistema.
+          </span>
         </div>
         <div className="mb-5">
           <Link href="categorias/categoria">
@@ -109,13 +111,13 @@ export default function Index() {
             <table className="bg-white border-2 w-full">
               <thead>
                 <tr>
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-bold uppercase tracking-wider">
                     Código
                   </th>
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-bold uppercase tracking-wider">
                     Nome
                   </th>
-                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-bold uppercase tracking-wider">
                     Ações
                   </th>
                 </tr>

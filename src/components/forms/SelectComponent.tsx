@@ -24,6 +24,7 @@ export default function SelectComponent(props: SelectProps) {
         render={({ field }) => (
           <Select
             {...field}
+            name={name}
             options={options}
             value={
               options

@@ -54,8 +54,8 @@ export default function Index(props: Props) {
   return (
     <div className="h-screen">
       <MenuTopo />
-      <div className="w-full md:w-4/12  mx-auto flex flex-col pt-0 p-5">
-        <span className="text-3xl font-bold text-center">Produto</span>
+      <div className="w-full md:w-4/12  mx-auto flex flex-col pt-3 p-5 bg-white shadow-xl rounded">
+        <span className="text-3xl font-medium text-center">Produto</span>
         <CreateUpdateProdutoForm
           produtoFullModel={produtoFullModel}
           onSalvarOuAtualizar={salvar}
