@@ -31,6 +31,7 @@ export default function Index(props: Props) {
   }));
 
   function salvar(data: ProdutoInput) {
+    console.log(data)
     atualizarProduto(data, produtoFullModel.id)
       .then((data) => {
         mostrarMensagemSucesso("Produto atualizado sucesso");

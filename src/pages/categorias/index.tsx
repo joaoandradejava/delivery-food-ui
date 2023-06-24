@@ -28,7 +28,7 @@ export default function Index() {
     isModalConfirmacaoExclusaoCategoriaOpen,
     setIsModalConfirmacaoExclusaoCategoriaOpen,
   ] = useState(false);
-  const size: number = 2;
+  const size: number = 10;
   Modal.setAppElement("#__next");
 
   useEffect(() => {

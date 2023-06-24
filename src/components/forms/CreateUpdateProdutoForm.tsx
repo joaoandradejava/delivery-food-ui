@@ -10,6 +10,7 @@ import {
 import SelectComponent from "./SelectComponent";
 import { ProdutoFullModel, ProdutoInput } from "@/models/produto";
 import Link from "next/link";
+import InputCurrency from "./InputCurrency";
 
 interface CreateUpdateProdutoFormProps {
   produtoFullModel: ProdutoFullModel;
@@ -23,7 +24,17 @@ const schema = z.object({
     .nonempty(CAMPO_OBRIGATORIO)
     .min(3, CAMPO_VALOR_MINIMO_O("nome", 3))
     .max(255, CAMPO_VALOR_MAXIMO_O("nome", 255)),
-  preco: z.string().nonempty(CAMPO_OBRIGATORIO),
+  preco: z
+    .string()
+    .nonempty(CAMPO_OBRIGATORIO)
+    .transform((p) => {
+      const currencyValue = p;
+      const numericValue = Number(
+        currencyValue.replace("R$", "").replace(".", "").replace(",", ".")
+      );
+
+      return numericValue;
+    }),
   fotoUrl: z.string(),
   categorias: z
     .array(
@@ -31,7 +42,7 @@ const schema = z.object({
         id: z.number(),
       })
     )
-    .min(1, { message: "É precisso ter pelo menos 1 categoria" }),
+    .min(1, { message: "É necessário ter pelo menos 1 categoria." }),
   descricao: z.string().optional(),
 });
 export default function CreateUpdateProdutoForm(
@@ -49,7 +60,9 @@ export default function CreateUpdateProdutoForm(
         ? {
             id: produtoFullModel.id,
             nome: produtoFullModel.nome,
-            descricao: produtoFullModel.descricao? produtoFullModel.descricao : '',
+            descricao: produtoFullModel.descricao
+              ? produtoFullModel.descricao
+              : "",
             preco: produtoFullModel.preco.toString(),
             categorias: produtoFullModel.categorias,
           }
@@ -75,13 +88,14 @@ export default function CreateUpdateProdutoForm(
         error={errors.nome}
         register={register}
       />
-      <Input
+
+      <InputCurrency
         id="preco"
         required
         label="Preço"
-        type="number"
         error={errors.preco}
         register={register}
+        defaultValue={produtoFullModel ? produtoFullModel.preco : 0}
       />
       <Input
         id="fotoUrl"
@@ -90,6 +104,7 @@ export default function CreateUpdateProdutoForm(
         error={errors.fotoUrl}
         register={register}
       />
+
       <SelectComponent
         name="categorias"
         control={control}
